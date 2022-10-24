@@ -35,4 +35,8 @@ override.tf.json
 terraform.rc
 
 door/
+build/
+dist/
+
 personal_info.txt
+main.spec

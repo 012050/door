@@ -1,5 +1,3 @@
-
-
 #웹 실행
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
@@ -7,33 +5,25 @@ from selenium.webdriver.common.keys import Keys
 #요소를 찾기
 from selenium.webdriver.common.by import By
 
-#창 크기 조절
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
-
-#추가 기능
-import time
-
 #경로 확인
 import os
 
+# 아이디, 비밀번호 추출?
 path1 = os.getcwd() + "\personal_info.txt"
 f = open(path1, "r")
-
 info_data = f.read()
 f.close()
-
 s_id = info_data.split("\n")[0]
 s_pw = info_data.split("\n")[1]
 
-print(s_id,s_pw)
-options = Options()
+# 아이디, 비밀번호 확인용
+# print(s_id,s_pw)
 
-# driver = webdriver.Chrome("C:\\com\program\Python\door\chromedriver.exe")
-
+# 크롬드라이버 찾기
 path2 = os.getcwd() + "\chromedriver.exe"
 driver = webdriver.Chrome(path2)
 
+# 창 최대화
 driver.maximize_window()
 
 driver.get("https://door.deu.ac.kr/sso/login.aspx")
