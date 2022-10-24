@@ -1,20 +1,20 @@
 
 
-#웹 실행을 위한
+#웹 실행
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 
-#요소를 찾기 위한
+#요소를 찾기
 from selenium.webdriver.common.by import By
 
-#창 크기 조절을 위한
+#창 크기 조절
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
-#추가 기능을 위한
+#추가 기능
 import time
 
-#경로 확인을 위한 
+#경로 확인
 import os
 
 
