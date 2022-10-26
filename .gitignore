@@ -35,7 +35,7 @@ override.tf.json
 terraform.rc
 
 door/
-# build/
+build/
 dist/
 
 *.spec
