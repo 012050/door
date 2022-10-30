@@ -1,12 +1,10 @@
-#웹 실행
+
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-
-#요소를 찾기
 from selenium.webdriver.common.by import By
-
-#경로 확인
+import time
 import os
+
 
 def door_login():
     driver.get("https://door.deu.ac.kr/sso/login.aspx")
@@ -20,35 +18,19 @@ def door_login():
     driver.implicitly_wait(60)
 
 
-
-# 텍스트 파일에서 아이디, 비밀번호 가져오기
 path1 = os.getcwd() + "\personal_info.txt"
 f = open(path1, "r")
 info_data = f.read()
 f.close()
 s_id = info_data.split("\n")[0]
 s_pw = info_data.split("\n")[1]
-
-# 크롬드라이버 찾기
 path2 = os.getcwd() + "\chromedriver.exe"
 driver = webdriver.Chrome(path2)
 
-# 창 최대화
-driver.maximize_window()
-
-
-
-
 door_login()
 
-while 1:
-    a = input('\n\nif you want to stop, press ctrl + c or input "stop"\n:')
 
-    if a == "stop" or a == "exit":
-        driver.close()
-        os._exit(1)
-
-    elif a == "main":
-        driver.get("http://door.deu.ac.kr/MyPage")
-
-os._exit(1)
+for a in range(1, 5):
+    print(a)
+    time.sleep(1)
+driver.close()
