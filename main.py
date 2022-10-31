@@ -8,6 +8,7 @@ from selenium.webdriver.common.by import By
 #경로 확인
 import os
 
+
 def door_login():
     driver.get("https://door.deu.ac.kr/sso/login.aspx")
     driver.implicitly_wait(60)
@@ -19,7 +20,12 @@ def door_login():
     driver.find_element(By.XPATH,'//*[@id="gnbContent"]/div/div[2]/ol[2]/li[3]/a').click()
     driver.implicitly_wait(60)
 
-
+def dorm():
+    # driver.get("https://dorm.deu.ac.kr/")
+    driver.get("https://dorm.deu.ac.kr/deu")
+    driver.implicitly_wait(60)
+    # a = driver.find_elements(By.CLASS_NAME, "login")[10]
+    # a.click()
 
 # 텍스트 파일에서 아이디, 비밀번호 가져오기
 path1 = os.getcwd() + "\personal_info.txt"
@@ -37,7 +43,7 @@ driver = webdriver.Chrome(path2)
 driver.maximize_window()
 
 
-
+check = "door"
 
 door_login()
 
@@ -48,7 +54,18 @@ while 1:
         driver.close()
         os._exit(1)
 
-    elif a == "main":
+    elif a == "dorm":
+        dorm()
+        check = "dorm"
+
+    elif a == "main" and check == "door":
         driver.get("http://door.deu.ac.kr/MyPage")
+
+    elif a ==  "main" and check == "dorm":
+        driver.get("https://dorm.deu.ac.kr/")
+
+    elif a == "re" or a == "login":
+        door_login()
+    
 
 os._exit(1)
