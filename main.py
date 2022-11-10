@@ -84,6 +84,20 @@ while 1:
             
         elif a == "dorm" and dorm == 1:
             driver.get("https://dorm.deu.ac.kr/deu/50/5050.kmc")
+    
+    elif a == "search":
+        check = "search"
+        driver.get("http://door.deu.ac.kr/Community/MessageSend")
+        # driver.get("http://door.deu.ac.kr/Community/PopUserList?type=none&searchtype=name&searchvaleu=")
+        driver.implicitly_wait(60)
+        driver.find_element(By.CSS_SELECTOR, "#popsearch > span > button").click()
+        driver.get("http://door.deu.ac.kr/MyPage")
+        # bbb = driver.find_element(By.CLASS_NAME, "i_text")
+        # while 1:
+        #     bc = input()
+        #     if bc == "exit" or bc == "stop" or bc == "멈춤":
+        #         break
+        #     bbb.send_keys(bc, Keys.RETURN)
 
 # -------------------------------------------
 #도어, 기숙사 페이지 내부 이동
