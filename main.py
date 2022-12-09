@@ -19,6 +19,8 @@ def door_login():
     driver.implicitly_wait(60)
     driver.find_element(By.XPATH,'//*[@id="gnbContent"]/div/div[2]/ol[2]/li[3]/a').click()
     driver.implicitly_wait(60)
+    driver.find_element(By.ID, "btn_quick_close").click()
+    driver.implicitly_wait(10)
 
 def dorm_login():
     # driver.get("https://dorm.deu.ac.kr/deu")
@@ -47,14 +49,23 @@ s_pw = info_data.split("\n")[1]
 path2 = os.getcwd() + "\chromedriver.exe"
 driver = webdriver.Chrome(path2)
 
-# 창 최대화
-driver.maximize_window()
+# 창 크기 조절
+# driver.maximize_window()
+mm = driver.get_window_size()
+print(mm.get("width"), mm.get("height"))
+driver.set_window_size(984, 945)
 
 
 check = "door"
 dorm = 0
 
-door_login()
+try:
+    door_login()
+
+except:
+    door_login()
+
+
 try:
     while 1:
         a = input('\n\nif you want to stop, press ctrl + c or input "stop"\n:')
@@ -62,7 +73,13 @@ try:
         if a == "stop" or a == "exit":
             driver.close()
             os._exit(1)
-
+        elif a == "size":
+            size = driver.get_window_size()
+            w = size.get("width")
+            h = size.get("height")
+            print(w, h)
+        elif a == "full":
+            driver.maximize_window()
     # -------------------------------------------
     # 도어, 기숙사 페이지 전환
         elif a == "door":
