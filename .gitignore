@@ -17,6 +17,7 @@ terraform.rc
 door/
 build/
 dist/
+main.exe
 
 *.spec
 *.jpg

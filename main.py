@@ -148,6 +148,24 @@ try:
                 driver.find_elements(By.CLASS_NAME, "text_area")[0].click()
                 # ff = driver.find_element(By.CLASS_NAME, "txt_gray")
                 # ff.send_keys("안녕하세요", Keys.RETURN)
+    # -------------------------------------------
+    # 학사 일정
+        elif a == "home":
+            driver.get("https://www.deu.ac.kr/www/academic_calendar")
+            driver.implicitly_wait(60)
+            check = "home"
+    # -------------------------------------------
+        elif a == "dap":
+            driver.get("https://dap.deu.ac.kr/sso/login.aspx")
+            driver.implicitly_wait(60)
+            # dap_id = driver.find_element(By.CLASS_NAME, "form-control Eng xjs_required xjs_flat_box")
+            dap_id = driver.find_element(By.XPATH, "/html/body/form/div[1]/div/div[1]/div[2]/input")
+            # dap_pw = driver.find_element(By.CLASS_NAME, "form-control input_enter xjs_required xjs_flat_box")
+            dap_pw = driver.find_element(By.XPATH, "/html/body/form/div[1]/div/div[1]/div[3]/input") 
+            dap_id.send_keys(s_id)
+            dap_pw.send_keys(s_pw, Keys.RETURN)
+            driver.implicitly_wait(60)
+            check = "dap"
 
 except:
     driver.get("http://door.deu.ac.kr/MyPage")
