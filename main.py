@@ -142,12 +142,8 @@ try:
                 b = str(input("맞춤법 검사기 - 맞춤법 검사를 원하는 단어나 문장을 입력해 주세요.\n>>"))
                 if b == "stop" or b == "exit" or b == "정지" or b == "멈춤":
                     break
-                
-                # driver.implicitly_wait(60)
-                # driver.find_element(By.CLASS_NAME, "delete_btn").click()
                 driver.find_elements(By.CLASS_NAME, "text_area")[0].click()
-                # ff = driver.find_element(By.CLASS_NAME, "txt_gray")
-                # ff.send_keys("안녕하세요", Keys.RETURN)
+
     # -------------------------------------------
     # 학사 일정
         elif a == "home":
@@ -158,15 +154,27 @@ try:
         elif a == "dap":
             driver.get("https://dap.deu.ac.kr/sso/login.aspx")
             driver.implicitly_wait(60)
-            # dap_id = driver.find_element(By.CLASS_NAME, "form-control Eng xjs_required xjs_flat_box")
             dap_id = driver.find_element(By.XPATH, "/html/body/form/div[1]/div/div[1]/div[2]/input")
-            # dap_pw = driver.find_element(By.CLASS_NAME, "form-control input_enter xjs_required xjs_flat_box")
             dap_pw = driver.find_element(By.XPATH, "/html/body/form/div[1]/div/div[1]/div[3]/input") 
             dap_id.send_keys(s_id)
             dap_pw.send_keys(s_pw, Keys.RETURN)
             driver.implicitly_wait(60)
             check = "dap"
 
+            print("추가 팝업창은 다음과 같습니다.", driver.window_handles)
+
+            # main = driver.window_handles
+            # for handle in main:
+            #     if handle != main[0]:
+            #         driver.switch_to.window(handle)
+            #         driver.close()
+
+            # tabs = driver.window_handles
+            # while len(tabs) != 1:
+            #     driver.switch_to.window(tabs[1])
+            #     driver.close()
+            #     tabs = driver.window_handles
+            # driver.switch_to.window(tabs[0])
 except:
     driver.get("http://door.deu.ac.kr/MyPage")
 os._exit(1)
