@@ -4,10 +4,14 @@ from selenium.webdriver.common.keys import Keys
 
 #요소를 찾기
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions
 
 #경로 확인
 import os
 
+#옵션
+import argparse
 
 def door_login():
     driver.get("https://door.deu.ac.kr/sso/login.aspx")
@@ -18,10 +22,11 @@ def door_login():
     pw.send_keys(s_pw,Keys.RETURN)
     driver.implicitly_wait(60)
     driver.find_element(By.XPATH,'//*[@id="gnbContent"]/div/div[2]/ol[2]/li[3]/a').click()
+    # b12 = WebDriverWait(driver, 60).until(expected_conditions.presence_of_element_located(By.XPATH, '//*[@id="gnbContent"]/div/div[2]/ol[2]/li[3]/a'))
+    # b12.click()
     driver.implicitly_wait(60)
     driver.find_element(By.ID, "btn_quick_close").click()
     driver.implicitly_wait(10)
-
 def dorm_login():
     # driver.get("https://dorm.deu.ac.kr/deu")
     driver.get("https://dorm.deu.ac.kr/deu/00/0000.kmc#")
@@ -34,7 +39,22 @@ def dorm_login():
     b = driver.find_element(By.XPATH, "/html/body/div/div/div[3]/div/ul[2]/li/span[2]/a")
     b.click()
     driver.get("https://dorm.deu.ac.kr/deu/50/5050.kmc")
+def page_close():
+    print("추가 팝업창은 다음과 같습니다.", driver.window_handles)
+    try:
+        main = driver.window_handles
+        for handle in main:
+            if handle != main[0]:
+                driver.switch_to.window(handle)
+                driver.close()
+    except:
+        print("\n오류가 발생했습니다.\n")
 
+# -------------------------------------------
+# 시작 페이지 설정(기본: door)
+parser = argparse.ArgumentParser()
+parser.add_argument('--page', type=str, default='door', help='Set start page')
+args = parser.parse_args()
 
 # 텍스트 파일에서 아이디, 비밀번호 가져오기
 try:
@@ -44,7 +64,6 @@ try:
     f.close()
     s_id = info_data.split("\n")[0]
     s_pw = info_data.split("\n")[1]
-
 except:
     print("Please enter your ID and password")
     s_id = input("ID: ")
@@ -66,18 +85,12 @@ driver.set_window_size(984, 945)
 
 check = "door"
 dorm = 0
+door_login()
 
-try:
-    door_login()
-
-except:
-    door_login()
-
+a = args.page
 
 try:
     while 1:
-        a = input('\n\nif you want to stop, press ctrl + c or input "stop"\n:')
-
         if a == "stop" or a == "exit":
             driver.close()
             os._exit(1)
@@ -86,8 +99,15 @@ try:
             w = size.get("width")
             h = size.get("height")
             print(w, h)
+    # -------------------------------------------
+    # 팝업 창 닫기
+        elif a == "close":
+            page_close()
+    # -------------------------------------------
+    # 화면최대화
         elif a == "full":
             driver.maximize_window()
+
     # -------------------------------------------
     # 도어, 기숙사 페이지 전환
         elif a == "door":
@@ -109,7 +129,7 @@ try:
                 
             elif a == "dorm" and dorm == 1:
                 driver.get("https://dorm.deu.ac.kr/deu/50/5050.kmc")
-        
+
         elif a == "search":
             check = "search"
             driver.get("http://door.deu.ac.kr/Community/MessageSend")
@@ -154,10 +174,11 @@ try:
 
     # -------------------------------------------
     # 학사 일정
-        elif a == "home":
+        elif a == "home" or a == "deu":
             driver.get("https://www.deu.ac.kr/www/academic_calendar")
             driver.implicitly_wait(60)
             check = "home"
+
     # -------------------------------------------
         elif a == "dap":
             driver.get("https://dap.deu.ac.kr/sso/login.aspx")
@@ -168,21 +189,8 @@ try:
             dap_pw.send_keys(s_pw, Keys.RETURN)
             driver.implicitly_wait(60)
             check = "dap"
-
-            print("추가 팝업창은 다음과 같습니다.", driver.window_handles)
-
-            # main = driver.window_handles
-            # for handle in main:
-            #     if handle != main[0]:
-            #         driver.switch_to.window(handle)
-            #         driver.close()
-
-            # tabs = driver.window_handles
-            # while len(tabs) != 1:
-            #     driver.switch_to.window(tabs[1])
-            #     driver.close()
-            #     tabs = driver.window_handles
-            # driver.switch_to.window(tabs[0])
+            page_close()
+        a = input('\n\nif you want to stop, press ctrl + c or input "stop"\n:')
 except:
     driver.get("http://door.deu.ac.kr/MyPage")
 os._exit(1)
