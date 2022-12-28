@@ -17,6 +17,7 @@ terraform.rc
 door/
 build/
 dist/
+__pycache__/
 main.exe
 
 *.spec

@@ -10,43 +10,50 @@ from selenium.webdriver.support import expected_conditions
 #경로 확인
 import os
 
+# 프로그램 종료
+import sys
+
 #옵션
 import argparse
 
-def door_login():
-    driver.get("https://door.deu.ac.kr/sso/login.aspx")
-    driver.implicitly_wait(60)
-    login = driver.find_element(By.XPATH,"/html/body/form/div[2]/div[1]/div/table/tbody/tr[1]/td[2]/input")
+import time
+
+def door_login(name):
+    name.get("https://door.deu.ac.kr/sso/login.aspx")
+    name.implicitly_wait(60)
+    login = name.find_element(By.XPATH,"/html/body/form/div[2]/div[1]/div/table/tbody/tr[1]/td[2]/input")
     login.send_keys(s_id)
-    pw = driver.find_element(By.CLASS_NAME,"i_text")
+    pw = name.find_element(By.CLASS_NAME,"i_text")
     pw.send_keys(s_pw,Keys.RETURN)
-    driver.implicitly_wait(60)
-    driver.find_element(By.XPATH,'//*[@id="gnbContent"]/div/div[2]/ol[2]/li[3]/a').click()
+    name.implicitly_wait(60)
+    name.find_element(By.XPATH,'//*[@id="gnbContent"]/div/div[2]/ol[2]/li[3]/a').click()
     # b12 = WebDriverWait(driver, 60).until(expected_conditions.presence_of_element_located(By.XPATH, '//*[@id="gnbContent"]/div/div[2]/ol[2]/li[3]/a'))
     # b12.click()
-    driver.implicitly_wait(60)
-    driver.find_element(By.ID, "btn_quick_close").click()
-    driver.implicitly_wait(10)
-def dorm_login():
-    # driver.get("https://dorm.deu.ac.kr/deu")
-    driver.get("https://dorm.deu.ac.kr/deu/00/0000.kmc#")
-    driver.implicitly_wait(60)
-    driver.find_element(By.XPATH, "/html/body/div[3]/div/div[2]/ul/li[5]/a").click()
-    driver.implicitly_wait(60)
-    a = driver.find_elements(By.CLASS_NAME, "in_idpw")[0]
+    name.implicitly_wait(60)
+    name.find_element(By.ID, "btn_quick_close").click()
+    name.implicitly_wait(10)
+def dorm_login(name):
+    # name.get("https://dorm.deu.ac.kr/deu")
+    name.get("https://dorm.deu.ac.kr/deu/00/0000.kmc#")
+    name.implicitly_wait(60)
+    name.find_element(By.XPATH, "/html/body/div[3]/div/div[2]/ul/li[5]/a").click()
+    name.implicitly_wait(60)
+    a = name.find_elements(By.CLASS_NAME, "in_idpw")[0]
     a.send_keys(s_id, Keys.TAB, s_pw, Keys.RETURN)
-    driver.implicitly_wait(60)
-    b = driver.find_element(By.XPATH, "/html/body/div/div/div[3]/div/ul[2]/li/span[2]/a")
+    name.implicitly_wait(60)
+    b = name.find_element(By.XPATH, "/html/body/div/div/div[3]/div/ul[2]/li/span[2]/a")
     b.click()
-    driver.get("https://dorm.deu.ac.kr/deu/50/5050.kmc")
-def page_close():
-    print("추가 팝업창은 다음과 같습니다.", driver.window_handles)
+    name.get("https://dorm.deu.ac.kr/deu/50/5050.kmc")
+def page_close(name):
+    print("추가 팝업창은 다음과 같습니다.", name.window_handles)
     try:
-        main = driver.window_handles
+        main = name.window_handles
         for handle in main:
             if handle != main[0]:
-                driver.switch_to.window(handle)
-                driver.close()
+                # print(main[handle])
+                name.switch_to.window(handle)
+                name.close()
+        name.switch_to.window(main[0])
     except:
         print("\n오류가 발생했습니다.\n")
 
@@ -85,7 +92,7 @@ driver.set_window_size(984, 945)
 
 check = "door"
 dorm = 0
-door_login()
+door_login(driver)
 
 a = args.page
 
@@ -93,7 +100,8 @@ try:
     while 1:
         if a == "stop" or a == "exit":
             driver.close()
-            os._exit(1)
+            sys.exit("\n프로그램을 종료합니다.\n")
+
         elif a == "size":
             size = driver.get_window_size()
             w = size.get("width")
@@ -102,7 +110,7 @@ try:
     # -------------------------------------------
     # 팝업 창 닫기
         elif a == "close":
-            page_close()
+            page_close(driver)
     # -------------------------------------------
     # 화면최대화
         elif a == "full":
@@ -122,7 +130,7 @@ try:
                 print("Already we are dorm page")
             
             elif a == "dorm" and dorm == 0:
-                dorm_login()
+                dorm_login(driver)
                 print("\ndorm\n")
                 check = "dorm"
                 dorm = 1
@@ -133,31 +141,23 @@ try:
         elif a == "search":
             check = "search"
             driver.get("http://door.deu.ac.kr/Community/MessageSend")
-            # driver.get("http://door.deu.ac.kr/Community/PopUserList?type=none&searchtype=name&searchvaleu=")
             driver.implicitly_wait(60)
             driver.find_element(By.CSS_SELECTOR, "#popsearch > span > button").click()
             driver.get("http://door.deu.ac.kr/MyPage")
-            # bbb = driver.find_element(By.CLASS_NAME, "i_text")
-            # while 1:
-            #     bc = input()
-            #     if bc == "exit" or bc == "stop" or bc == "멈춤":
-            #         break
-            #     bbb.send_keys(bc, Keys.RETURN)
-
     # -------------------------------------------
     #도어, 기숙사 페이지 내부 이동
         elif (a == "main") and check == "door":
             driver.get("http://door.deu.ac.kr/MyPage")
 
         elif (a == "re" or a == "login") and check == "door":
-            door_login()
+            door_login(driver)
 
         elif (a == "main") and check == "dorm":
             driver.get("https://dorm.deu.ac.kr/deu/50/5050.kmc")
             
         elif (a == "out"):
             if dorm == 0:
-                dorm_login()
+                dorm_login(driver)
             check = "dorm"
             driver.get("https://dorm.deu.ac.kr/deu/stayout/getStayoutWriteView.kmc?seq=&stayout_locgbn=DE&list_type=mypage")
     # -------------------------------------------
@@ -188,9 +188,10 @@ try:
             dap_id.send_keys(s_id)
             dap_pw.send_keys(s_pw, Keys.RETURN)
             driver.implicitly_wait(60)
+            time.sleep(1)
             check = "dap"
-            page_close()
         a = input('\n\nif you want to stop, press ctrl + c or input "stop"\n:')
+
 except:
-    driver.get("http://door.deu.ac.kr/MyPage")
-os._exit(1)
+    # print("\n에러가 발생했습니다.\n")
+    sys.exit()
