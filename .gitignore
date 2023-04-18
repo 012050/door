@@ -14,7 +14,7 @@ override.tf.json
 .terraformrc
 terraform.rc
 
-door/
+__library/
 build/
 dist/
 __pycache__/
