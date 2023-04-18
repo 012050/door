@@ -193,5 +193,6 @@ try:
         a = input('\n\nif you want to stop, press ctrl + c or input "stop"\n:')
 
 except:
-    # print("\n에러가 발생했습니다.\n")
+    print("\n에러가 발생했습니다.\n")
+    driver.close()
     sys.exit()
