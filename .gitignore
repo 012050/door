@@ -1,3 +1,5 @@
+__library/
+chromedriver.exe
 
 **/.terraform/*
 *.tfstate
@@ -14,7 +16,6 @@ override.tf.json
 .terraformrc
 terraform.rc
 
-__library/
 build/
 dist/
 __pycache__/
