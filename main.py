@@ -191,7 +191,8 @@ try:
             time.sleep(1)
             check = "dap"
         a = input('\n\nif you want to stop, press ctrl + c or input "stop"\n:')
-
+        a = a.lower()
+        print(a)
 except:
     print("\n에러가 발생했습니다.\n")
     driver.close()
