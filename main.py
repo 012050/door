@@ -183,8 +183,8 @@ try:
         elif a == "dap":
             driver.get("https://dap.deu.ac.kr/sso/login.aspx")
             driver.implicitly_wait(60)
-            dap_id = driver.find_element(By.XPATH, "/html/body/form/div[1]/div/div[1]/div[2]/input")
-            dap_pw = driver.find_element(By.XPATH, "/html/body/form/div[1]/div/div[1]/div[3]/input") 
+            dap_id = driver.find_element(By.XPATH, "/html/body/form/div[3]/div/div[1]/div[2]/input[1]")
+            dap_pw = driver.find_element(By.XPATH, "/html/body/form/div[3]/div/div[1]/div[3]/input")
             dap_id.send_keys(s_id)
             dap_pw.send_keys(s_pw, Keys.RETURN)
             driver.implicitly_wait(60)
