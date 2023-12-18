@@ -29,5 +29,10 @@ def GetUserDataPage():
             json_data = json.load(json_file)
         return jsonify(json_data)
 
+@app.route("/getdata/page", methods=["GET"])
+def DataPage():
+    return render_template("data.html")
+
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port="8080", debug=True)
