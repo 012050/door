@@ -17,6 +17,7 @@ def GetUserData(ID, PW):
     login = driver.find_element(By.XPATH,"/html/body/form/div[2]/div[1]/div/table/tbody/tr[1]/td[2]/input")
     login.send_keys(ID, Keys.TAB, PW, Keys.RETURN)
     driver.implicitly_wait(60)
+    time.sleep(2)
     driver.find_element(By.XPATH,'//*[@id="gnbContent"]/div/div[2]/ol[2]/li[3]/a').click()
     driver.implicitly_wait(60)
     driver.find_element(By.ID, "btn_quick_close").click()
