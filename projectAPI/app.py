@@ -1,6 +1,6 @@
 import json
 
-from flask import Flask, jsonify, request, render_template
+from flask import Flask, jsonify, request, render_template, redirect
 from UserDataCrawler import GetUserData
 app = Flask(__name__)
 
@@ -12,7 +12,8 @@ def MainPage():
 def GetUserDataPage():
     ID = request.form.get("ID")
     PW = request.form.get("PASSWORD")
-
+    if ID == None or PW == None:
+        return redirect("/")
     # POST 요청 - 데이터 저장 및 반환
     if request.method == "POST":
         GetUserData(ID, PW)
