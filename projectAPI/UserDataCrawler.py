@@ -11,7 +11,10 @@ from selenium.webdriver.common.by import By
 
 def GetUserData(ID, PW):
     json_data = {}
-    driver = webdriver.Chrome()
+    try:
+        driver = webdriver.Chrome()
+    except:
+        driver = webdriver.Firefox()
     driver.get("http://door.deu.ac.kr/sso/login.aspx")
     driver.implicitly_wait(60)
     login = driver.find_element(By.XPATH,"/html/body/form/div[2]/div[1]/div/table/tbody/tr[1]/td[2]/input")
