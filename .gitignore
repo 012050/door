@@ -26,7 +26,7 @@ __pycache__/
 main.exe
 
 *.spec
-*.jpg
+# *.jpg
 personal_info.txt
 
 # Byte-compiled / optimized / DLL files
