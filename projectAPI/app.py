@@ -1,4 +1,5 @@
 import json
+import os
 
 from flask import Flask, jsonify, request, render_template, redirect
 from UserDataCrawler import GetUserData
@@ -16,7 +17,8 @@ def GetUserDataPage():
         return redirect("/")
     # POST 요청 - 데이터 저장 및 반환
     if request.method == "POST":
-        GetUserData(ID, PW)
+        if os.path.isfile(f'{ID}.json') == False:
+            GetUserData(ID, PW)
         FileName = f'{ID}.json'
         with open(FileName, 'r') as json_file:
             json_data = json.load(json_file)
