@@ -1,19 +1,26 @@
-import os
-import dotenv
+
 import time
 import json
+import platform
 
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import Select
 
+driver_name = 'chrome'
 
+if platform.system() == 'Windows':
+    driver_name = 'chrome'
+elif platform.system() == 'Linux':
+    driver_name = 'firefox'
 
 def GetUserData(ID, PW):
     json_data = {}
-    try:
+
+    if driver_name == 'chrome':
         driver = webdriver.Chrome()
-    except:
+    elif driver_name == 'firefox':
         driver = webdriver.Firefox()
     driver.get("http://door.deu.ac.kr/sso/login.aspx")
     driver.implicitly_wait(60)
@@ -25,6 +32,15 @@ def GetUserData(ID, PW):
     driver.implicitly_wait(60)
     driver.find_element(By.ID, "btn_quick_close").click()
     driver.implicitly_wait(10)
+
+    # 학기 설정(테스트용)
+    tno = driver.find_element(By.XPATH, '/html/body/div[2]/div[2]/div[3]/div[2]/select')
+    spin_options = Select(tno)
+    # 1학기 전을 선택(2023 2학기)
+    spin_options.select_by_index(1)
+    print("프로그램 종료")
+    driver.close()
+    return 0
 
     # 강의실 목록
     lecture_list = driver.find_elements(By.XPATH, '//*[@id="wrap"]/div[2]/div[3]/div[3]/table/tbody/tr')
@@ -90,6 +106,7 @@ def GetUserData(ID, PW):
 
         except:
             print(f"수업활동일지 확인 코드 오류 : {lecture_name}")
+            print(f"공지사항 확인 코드 오류 : {lecture_name}")
 
         # 강의실로 돌아가기
         driver.get("http://door.deu.ac.kr/MyPage")
@@ -102,7 +119,10 @@ def GetUserData(ID, PW):
         json.dump(json_data, json_file, indent=4)
     return 0
 
+
 if __name__ == "__main__":
+    import os
+    import dotenv
     start_time = time.time()
     dotenv.load_dotenv(dotenv.find_dotenv())
     id = os.environ["ID"]
