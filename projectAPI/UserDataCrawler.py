@@ -38,14 +38,17 @@ def GetUserData(ID, PW):
     spin_options = Select(tno)
     # 1학기 전을 선택(2023 2학기)
     spin_options.select_by_index(1)
-    print("프로그램 종료")
-    driver.close()
-    return 0
 
     # 강의실 목록
     lecture_list = driver.find_elements(By.XPATH, '//*[@id="wrap"]/div[2]/div[3]/div[3]/table/tbody/tr')
     lecture_list.pop(0)
     for lecture_number in range(len(lecture_list)):
+        # 학기 설정(테스트용)
+        print(f"ㅁㄴㅇㄻㄴㅇㄻ {spin_options}")
+        tno = driver.find_element(By.XPATH, '/html/body/div[2]/div[2]/div[3]/div[2]/select')
+        spin_options = Select(tno)
+        spin_options.select_by_index(1)
+
         lecture_click_list = f"/html/body/div[2]/div[2]/div[3]/div[3]/table/tbody/tr[{int(lecture_number) + 2}]/td[3]/a"
         lecture_list_name = driver.find_element(By.XPATH, lecture_click_list)
         lecture_name = lecture_list_name.text
