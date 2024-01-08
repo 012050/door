@@ -8,21 +8,12 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
 
-driver_name = 'chrome'
 selection_option_index = 1
-
-if platform.system() == 'Windows':
-    driver_name = 'chrome'
-elif platform.system() == 'Linux':
-    driver_name = 'firefox'
 
 def GetUserData(ID, PW):
     json_data = {}
 
-    if driver_name == 'chrome':
-        driver = webdriver.Chrome()
-    elif driver_name == 'firefox':
-        driver = webdriver.Firefox()
+    driver = webdriver.Chrome("chromedriver")
 
     Login(driver, ID, PW)
 
