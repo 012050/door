@@ -1,8 +1,8 @@
 version: "3.9"
 
 services:
-  winformapi:
-    build: ./projectAPI
+  web:
+    build: ./web
     restart: always
     ports:
       - 8080:8080
